@@ -13,7 +13,7 @@ class Controller:
 
 
     #RIEMPIRE DROPDOWN
-    def fillDDsRating(self):
+    def fillDD(self):
         self._view._ddrating1.options.clear()
         for r in self._model.ratings():
             self._view._ddrating2.options.append(ft.dropdown.Option(text=r, data=r, on_click=self.memorat2))
@@ -37,10 +37,9 @@ class Controller:
 
         #STAMPARE INFO AGGIUNTIVE
         self._view.txt_result.controls.append(ft.Text(f"Top 5 archi:"))
-        for i in range(5):
-            self._view.txt_result.controls.append(ft.Text(f"{self._model.archimaggiori[i]["att1"].name} -> "
-                                                          f"{self._model.archimaggiori[i]["att2"].name}: "
-                                                          f"{self._model.archimaggiori[i]["peso"]["weight"]}"))
+        self._view.txt_result.controls.append(ft.Text(f"Top 5 archi:"))
+        for arco in self._model.getarchimaggiori():
+            self._view.txt_result.controls.append(ft.Text(f"Arco: {arco[0]} -> {arco[1]} - Peso {arco[2]["weight"]}"))
 
         numconn, piulunga = self._model.getcompconnessa()
         self._view.txt_result.controls.append(ft.Text(f"Il grafo ha {numconn} componenti connesse"))

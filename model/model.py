@@ -45,6 +45,19 @@ class Model:
         archi.sort(key=lambda x:x[2]["weight"], reverse=True)
         return archi[0:min(3, len(archi))]
 
+    #cammino più lungo partendo da un nodo
+    def camminomassimo(self, partenza):
+        albero = nx.dfs_tree(self._graph, partenza)
+        massimo = []
+
+        for nodo in albero:
+            # cammino tra partenza e nodo
+            cammino = nx.shortest_path(albero, source=partenza, target=nodo)
+            if len(cammino) > len(massimo):
+                massimo = copy.deepcopy(cammino)
+
+        return massimo
+
 ########################################################################################################
 # RICORSIONE
 ########################################################################################################
