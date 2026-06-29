@@ -45,6 +45,18 @@ class Model:
         archi.sort(key=lambda x:x[2]["weight"], reverse=True)
         return archi[0:min(3, len(archi))]
 
+    #se archi diretti, ordinati per peso uscenti-peso entranti
+    def getinfluente(self):
+        #lista di tuple artista, influenza
+        influenza = []
+        for n in self._graph.nodes():
+            outed = sum(i[2]["weight"] for i in self._graph.out_edges(n, data=True))
+            ined = sum(i[2]["weight"] for i in self._graph.in_edges(n, data=True))
+            influenza.append((n, (outed-ined)))
+
+        influenza = sorted(influenza, key=lambda x:x[1], reverse=True)
+        return influenza[0]
+
     #cammino più lungo partendo da un nodo
     def camminomassimo(self, partenza):
         albero = nx.dfs_tree(self._graph, partenza)
@@ -57,6 +69,21 @@ class Model:
                 massimo = copy.deepcopy(cammino)
 
         return massimo
+
+    #cammino più lungo nodo generico
+    def camminoMassimo(self):
+        best_path = []
+
+        for source in self._graph.nodes():
+            albero = nx.dfs_tree(self._graph, source)
+
+            for target in albero:
+                path = nx.shortest_path(albero, source=source, target=target)
+
+                if len(path) > len(best_path):
+                    best_path = copy.deepcopy(path)
+
+        return best_path
 
 ########################################################################################################
 # RICORSIONE

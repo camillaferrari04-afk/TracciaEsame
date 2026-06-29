@@ -37,7 +37,6 @@ class Controller:
 
         #STAMPARE INFO AGGIUNTIVE
         self._view.txt_result.controls.append(ft.Text(f"Top 5 archi:"))
-        self._view.txt_result.controls.append(ft.Text(f"Top 5 archi:"))
         for arco in self._model.getarchimaggiori():
             self._view.txt_result.controls.append(ft.Text(f"Arco: {arco[0]} -> {arco[1]} - Peso {arco[2]["weight"]}"))
 
